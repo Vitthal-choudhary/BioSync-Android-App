@@ -1,6 +1,7 @@
 package com.example.biosync
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -62,6 +63,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 
 class SecondActivity : ComponentActivity(){
     @OptIn(ExperimentalMaterial3Api::class)
@@ -167,7 +169,7 @@ class SecondActivity : ComponentActivity(){
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if (selectedItem.value == 0){
-                        CardsPreview()
+                        CardsPreview(context = this@SecondActivity)
                         ChatBot()
                     }
                     else if(showNothinG.value){
@@ -191,6 +193,7 @@ class SecondActivity : ComponentActivity(){
                 }
             }
         }
+
 
     }
 }
@@ -270,12 +273,14 @@ fun Buttonsforuser(icon: @Composable () -> Unit, label: String){
     }
 }
 
-@Preview(showBackground = true)
+
 @Composable
-fun CardsPreview(){
+fun CardsPreview(context: Context){
+    val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSd2cHWhX0knKThcRiekh1Szf4jRzSiltuGtDOkB59UuUg-NQw/viewform"))
     Column(
         modifier = Modifier
-            .padding(horizontal = 10.dp, vertical = 0.dp),
+            .padding(horizontal = 10.dp, vertical = 0.dp)
+            ,
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         Column(
@@ -324,7 +329,7 @@ fun CardsPreview(){
             ) {
                 IconButton(
                     onClick = {
-
+                        context.startActivity(i)
                     },
                     modifier = Modifier
                         .size(50.dp)
@@ -365,6 +370,12 @@ fun CardsPreview(){
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardsPreviewWrapper(){
+    CardsPreview(context = androidx.compose.ui.platform.LocalContext.current)
 }
 
 @Composable
