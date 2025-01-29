@@ -40,8 +40,11 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.res.painterResource
 
 import androidx.compose.material3.BottomAppBar
@@ -49,6 +52,11 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.sharp.MailOutline
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.sp
@@ -158,6 +166,7 @@ class SecondActivity : ComponentActivity(){
                 ) {
                     if (selectedItem.value == 0){
                         CardsPreview()
+                        ChatBot()
                     }
                     else if(showNothinG.value){
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
@@ -299,3 +308,43 @@ fun CardsPreview(){
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun ChatBot(){
+    var text by remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(Icons.Filled.MailOutline, contentDescription = "Message Icon", modifier = Modifier.padding(end = 8.dp))
+            Text(text = "Ask me anything!", fontSize = 18.sp)
+        }
+
+        OutlinedTextField(
+            value = text,
+            onValueChange = {text = it},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            placeholder = { Text("Type here") },
+            trailingIcon = {
+                IconButton(onClick = {
+                    // Handle send action here
+                }) {
+                    Icon(Icons.Filled.Send, contentDescription = "Send Icon",
+                        tint = Color.Blue,
+                        modifier = Modifier.size(30.dp))
+                }
+            },
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = Color.LightGray)
+        )
+    }
+}
