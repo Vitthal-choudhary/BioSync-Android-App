@@ -193,33 +193,52 @@ class SecondActivity : ComponentActivity(){
     }
 }
 
+
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
-fun Cards(imageIcon: @Composable () -> Unit, heading: String, body: String) {
+fun Cards(imageIcon: @Composable () -> Unit, heading: String, body: String, value: String) {
     Card(
             modifier = Modifier
                 .padding(all = 10.dp)
                 .fillMaxWidth()
                 .height(100.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .padding(all = 10.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.padding(start = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 imageIcon()
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(text = heading, fontSize = 16.sp)
             }
-            Spacer(modifier = Modifier.height(5.dp))
-            Row(modifier = Modifier.fillMaxWidth()){
-            }
-            Text(text = body, fontSize = 14.sp, color = Color.Gray)
+            Text(
+                text = value,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(end = 10.dp)
+            )
         }
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+            Spacer(modifier = Modifier.height(5.dp)) // Space between heading and body
+                Text(text = body, fontSize = 14.sp, color = Color.Gray)
+            }
+        }
+
     }
 }
 
@@ -261,7 +280,7 @@ fun CardsPreview(){
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Cards(imageIcon = {
+            Cards(imageIcon = { // Temperature card
                 Icon(
                     painter = painterResource(id = R.drawable.thermometer),
                     contentDescription = null,
@@ -270,8 +289,8 @@ fun CardsPreview(){
                         .width(30.dp)
                         .height(30.dp)
                 )
-            }, heading = "Temperature", body = "Your body temperature is normal")
-            Cards(imageIcon = {
+            }, heading = "Temperature", body = "Your body temperature is normal", value = "37°C")
+            Cards(imageIcon = { // Heart rate card
                 Icon(
                     Icons.Filled.Favorite,
                     contentDescription = null,
@@ -280,8 +299,8 @@ fun CardsPreview(){
                         .width(30.dp)
                         .height(30.dp)
                 )
-            }, heading = "Heart rate", body = "Your heart rate is normal")
-            Cards(imageIcon = {
+            }, heading = "Heart rate", body = "Your heart rate is normal", value = "72 BPM")
+            Cards(imageIcon = { // Blood Oxygen Card
                 Icon(
                     Icons.Filled.Favorite,
                     contentDescription = null,
@@ -290,7 +309,7 @@ fun CardsPreview(){
                         .width(30.dp)
                         .height(30.dp)
                 )
-            }, heading = "Blood Oxygen", body = "Your blood oxygen is normal")
+            }, heading = "Blood Oxygen", body = "Your blood oxygen is normal", value = "98%")
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -308,7 +327,6 @@ fun CardsPreview(){
     }
 }
 
-@Preview(showBackground = true)
 @Composable
 fun ChatBot(){
     var text by remember { mutableStateOf("") }
