@@ -1,6 +1,8 @@
 package com.example.biosync
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.MaterialTheme
@@ -243,6 +245,7 @@ fun Cards(imageIcon: @Composable () -> Unit, heading: String, body: String, valu
 }
 
 @Composable
+
 fun Buttonsforuser(icon: @Composable () -> Unit, label: String){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -315,14 +318,51 @@ fun CardsPreview(){
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Absolute.SpaceEvenly
         ) {
-            Buttonsforuser(
-                icon = { Icon(Icons.Filled.AccountCircle, contentDescription = null) },
-                label = "Schedule an Appointment"
-            )
-            Buttonsforuser(
-                icon = { Icon(Icons.Filled.Share, contentDescription = null) },
-                label = "Share Your Report"
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(bottom = 10.dp)
+            ) {
+                IconButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                            shape = CircleShape
+                        )
+                ) {
+                    Icon(Icons.Filled.AccountCircle, contentDescription = null)
+                }
+                Text(
+                    text = "Schedule an Appointment",
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(bottom = 10.dp)
+            ) {
+                IconButton(
+                    onClick = {
+                    },
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                            shape = CircleShape
+                        )
+                ) {
+                    Icon(Icons.Filled.Share, contentDescription = null)
+                }
+                Text(
+                    text = "Share Your Report",
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
         }
     }
 }
