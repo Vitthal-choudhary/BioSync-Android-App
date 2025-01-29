@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextField
@@ -248,35 +249,9 @@ fun Cards(imageIcon: @Composable () -> Unit, heading: String, body: String, valu
 }
 
 @Composable
-
-fun Buttonsforuser(icon: @Composable () -> Unit, label: String){
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(bottom = 10.dp)
-    ) {
-        IconButton(
-            onClick = {
-            },
-            modifier = Modifier
-                .size(50.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                    shape = CircleShape
-                )        ) {
-            icon()
-        }
-        Text(
-            text = label,
-            fontSize = 12.sp,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-    }
-}
-
-
-@Composable
 fun CardsPreview(context: Context){
     val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSd2cHWhX0knKThcRiekh1Szf4jRzSiltuGtDOkB59UuUg-NQw/viewform"))
+    val i2 = Intent(Intent.ACTION_VIEW, Uri.parse("https://drive.google.com/uc?export=download&id=1PEvb3f0asH-4_mlpxiBikSx5Wp3_jADy"))
     Column(
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 0.dp)
@@ -352,6 +327,7 @@ fun CardsPreview(context: Context){
             ) {
                 IconButton(
                     onClick = {
+                        context.startActivity(i2)
                     },
                     modifier = Modifier
                         .size(50.dp)
@@ -406,7 +382,7 @@ fun ChatBot(){
             placeholder = { Text("Type here") },
             trailingIcon = {
                 IconButton(onClick = {
-                    // Handle send action here
+
                 }) {
                     Icon(Icons.Filled.Send, contentDescription = "Send Icon",
                         tint = Color.Blue,
