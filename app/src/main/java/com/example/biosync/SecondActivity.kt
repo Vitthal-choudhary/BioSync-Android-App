@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.MaterialTheme
 import androidx.activity.compose.setContent
@@ -61,6 +62,8 @@ import androidx.compose.material.icons.sharp.MailOutline
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.sp
@@ -250,6 +253,36 @@ fun Cards(imageIcon: @Composable () -> Unit, heading: String, body: String, valu
 
 @Composable
 fun CardsPreview(context: Context){
+    // Randomize the value of the cards
+
+    var tempValue by remember { mutableStateOf((36..38).random()) }
+    var heartValue by remember { mutableStateOf((72..90).random()) }
+    var oxyValue by remember { mutableStateOf((85..95).random()) }
+
+    // Use LaunchedEffect to run the code every 2 seconds
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        while (true) {
+            // Wait for 2 seconds
+            delay(2000)
+
+            // Update the values with new random numbers
+            tempValue = (36..38).random()
+            heartValue = (72..90).random()
+            oxyValue = (85..95).random()
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
     val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSd2cHWhX0knKThcRiekh1Szf4jRzSiltuGtDOkB59UuUg-NQw/viewform"))
     val i2 = Intent(Intent.ACTION_VIEW, Uri.parse("https://drive.google.com/uc?export=download&id=1PEvb3f0asH-4_mlpxiBikSx5Wp3_jADy"))
     Column(
@@ -272,7 +305,7 @@ fun CardsPreview(context: Context){
                         .width(30.dp)
                         .height(30.dp)
                 )
-            }, heading = "Temperature", body = "Your body temperature is normal", value = "37°C")
+            }, heading = "Temperature", body = "Your body temperature is normal", value = "$tempValue°C")
             Cards(imageIcon = { // Heart rate card
                 Icon(
                     Icons.Filled.Favorite,
@@ -282,7 +315,7 @@ fun CardsPreview(context: Context){
                         .width(30.dp)
                         .height(30.dp)
                 )
-            }, heading = "Heart rate", body = "Your heart rate is normal", value = "72 BPM")
+            }, heading = "Heart rate", body = "Your heart rate is normal", value = "$heartValue BPM")
             Cards(imageIcon = { // Blood Oxygen Card
                 Icon(
                     Icons.Filled.Favorite,
@@ -292,7 +325,7 @@ fun CardsPreview(context: Context){
                         .width(30.dp)
                         .height(30.dp)
                 )
-            }, heading = "Blood Oxygen", body = "Your blood oxygen is normal", value = "98%")
+            }, heading = "Blood Oxygen", body = "Your blood oxygen is normal", value = "$oxyValue%")
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
